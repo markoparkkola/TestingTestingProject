@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="theApp">
+    <div class="car" v-for="car in cars">
+        <label>{{car.manufacturer}} {{car.model}}</label>
+        <img :src="'@Url.Action("GetDefaultImage")/' + car.id" @@click="showPictures(car.id)" onerror="this.classList.add('error')"/>
+        <p class="price">{{car.price}} <span>{{car.priceUnit}}</span></p>
+        <p class="details">
+            <span class="detail" v-if="car.horsepower">Horsepower: {{car.horsepower}}</span>
+            <span class="detail" v-if="car.topSpeed">Top speed: {{car.topSpeed}}</span>
+        </p>
+    </div>
+
+    <div class="slider" v-if="pictures && pictures.length" @@click="pictures=[]">
+        <ul>
+            <li v-for="id in pictures" :style="{width: (100 / pictures.length).toString() + '%'}">
+                <img :src="'@Url.Action("GetImage")/' + id" onerror="this.classList.add('error')" />
+            </li>
+        </ul>
+    </div>
+
+    <div class="overlay" v-if="pictures && pictures.length" @@click="pictures=[]">
+    </div>
+</div>
+
+@section scripts {
+<script src="~/js/vue.js"~></script>
+<script src="~/js/axios.js"></script>
+
+<script>
+    new Vue({
+        el: '#theApp',
+        data () {
+            return {
+                cars: [],
+                pictures: []
+            }
+        },
+        mounted () {
+            axios.get('@Url.Action("GetCars")')
+                .then(response => (this.cars = response.data))
+                .catch(error => console.log(error));
+        },
+        methods: {
+            showPictures(id) {
+                axios.get('@Url.Action("GetImages")/' + id)
+                    .then(response => (this.pictures = response.data))
+                    .catch(error => console.log(error));
+            }
+        }
+    });
+</script>
+}
