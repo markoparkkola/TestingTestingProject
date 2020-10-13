@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Marko.Services.Model
 {
+    /// <summary>
+    /// Car model for strong typing.
+    /// </summary>
     public class Car
     {
         public int Id { get; set; }

@@ -15,6 +15,9 @@ namespace TestingTestingProject.Controllers
         private readonly ILogger<HomeController> logger;
         private readonly ICarSalesman carSalesman;
 
+        // DI magic can be seen here. See above we have introduced instance variable called 'carSalesman'.
+        // It is null until we give it value here on the class constructor. But where does the parameter comes from?
+        // Well, we configured our little DI service builder in Startup.cs file, remember?
         public HomeController(ILogger<HomeController> logger, ICarSalesman carSalesman)
         {
             this.logger = logger;
@@ -40,6 +43,10 @@ namespace TestingTestingProject.Controllers
         [HttpGet]
         public async Task<JsonResult> GetCars()
         {
+            // Because services are loaded by magic, we don't need ugly database spells here.
+            // Let our async ICarSalesman interface do the job.
+            // One could do all the assertions and checking from browser provided parameters here, if there were any,
+            // or possibly map view models to business models (and vice versa).
             return Json(await carSalesman.GetCars());
         }
 

@@ -25,7 +25,7 @@ namespace TestingTestingProject
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDiServices(Configuration);
+            services.AddDiServices(Configuration); // Adds services configured in database
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

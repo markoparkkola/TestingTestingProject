@@ -20,7 +20,12 @@ namespace TestingTestingProject
                 })
                 .ConfigureAppConfiguration((context, builder) =>
                 {
-                    builder.AddDiConfiguration(options => options.ConnectionString = @"Server=MYLLY; User Id=ConfigReader; Password=ConfigReader;");
+                    // Load DI configurations here. Actual DI magic is done later.
+                    builder.AddDiConfiguration(options =>
+                    {
+                        options.ConnectionString = @"Server=MYLLY; User Id=ConfigReader; Password=ConfigReader;";
+                        options.Environment = "DEBUG";
+                    });
                 });
     }
 }

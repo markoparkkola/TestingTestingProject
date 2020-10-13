@@ -9,6 +9,13 @@ using System.Threading.Tasks;
 
 namespace Marko.Services.Impl
 {
+    /// <summary>
+    /// Implements ICarSalesman interface. This is basically just bunchload of SQL spells and reading the results.
+    /// All the queries are made against database views. Database user has only access to these views and not directly
+    /// to the tables. There is no possibility to store, delete or change anything either.
+    /// As you can see, I didn't spend much time in thinking about good names for stuff. 
+    /// Naming things is the hardest thing in programming anyway.
+    /// </summary>
     public class CarSalesman : ICarSalesman
     {
         private readonly string connectionString;
